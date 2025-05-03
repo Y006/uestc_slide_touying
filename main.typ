@@ -32,23 +32,31 @@
   )
 )
 
+#let block_color_blue = rgb(70, 110, 172)
+#let block_color_orange = rgb(237, 168, 92)
 #let (example, feature, variant, syntax) = frames(
   feature: ("Feature",),
   // For each frame kind, you have to provide its supplement title to be displayed
   variant: ("Variant",),
   // You can provide a color or leave it out and it will be generated
-  example: ("Example", gray),
+  example: ("Example", block_color_blue),
   // You can add as many as you want
   syntax: ("Syntax",),
 )
 // This is necessary. Don't forget this!
 #show: frame-style(styles.boxy)
 
+
 // 设置标题编号格式（1.1 → 1.）
 // #set heading(numbering: numbly("{1}.", default: "1.1"))
 
 // 设置数学公式编号格式
 #set math.equation(numbering: "(1)")
+
+// #show strong: content => {
+//   show regex("\p{Hani}"): it => box(place(text("·", size: 1em), dx: 0.1em, dy: 0.75em) + it)
+//   content.body
+// }
 
 // 标题页
 #title-slide()
@@ -67,6 +75,32 @@
 + 第二项
   - 第二项的第一个子项，这是一个较长的子项，用来展示效果。
 + 第三项，这是一个非常非常非常非常非常非常非常非常非常长的项，用来展示换行的效果。
+
+== 字号
+#slide[
+  #text(size: 10pt,)[10pt的文字]
+
+  #text(size: 20pt,)[10pt的文字]
+
+  #text(size: 30pt,)[30pt的文字]
+
+  #text(size: 1em)[1em的文字]
+
+  #text(size: 2em)[2em的文字]
+][
+  #text(fill: red)[红色]
+  #text(fill: blue)[蓝色]
+
+  #text(fill: rgb("ef475d"))[茉莉红]
+  #text(fill: color.hsl(200deg, 100%, 70%))[天依蓝]
+
+
+  #text(font: "STFangSong")[word文字内容]
+
+  #text(font: "KaiTi SC")[word文字内容]
+
+  #text(font: ("Times New Roman", "STHeiti"))[word文字内容：同时规定中文和英文]
+]
 
 == 分栏
 
@@ -152,9 +186,22 @@
 )
 
 == 块显示
-#example[Title][Optional Tag][
-  Body, i.e. large content block for the frame.
+#example[#text(fill: white)[标题]][标签1][
+  这是一个普通的示例框。
+  - 支持自动编号
+  - 支持多标签展示
 ]
+#example[#text(fill: white)[多标签演示]][Tag1][Tag2][Tag3][
+  示例框支持多个标签，适合分类演示。
+]
+#example[#text(fill: white)[外层框]][
+  内容开始
+
+  #example[#text(fill: white)[内层框]][子标签][
+    这是嵌套结构，编号会自动向内嵌套。
+  ]
+]
+
 
 = 数学公式
 == 基础用法
@@ -305,7 +352,7 @@ caption: [校徽],
   )
 )
 #v(-0.8em)
-#let a =  [Apples]
+#let a =  text(size: 12pt)[Apples]
 #let b =  text(size: 12pt)[Bananas]
 #let c =  text(size: 12pt)[Kiwis]
 #let d =  text(size: 12pt)[Mangos]
@@ -426,7 +473,7 @@ int main() {
   #bibliography("ref.bib", title: none, style: "ieee")
 ]
 
-== 
+== #none
 #align(
   center + horizon, 
   text(
