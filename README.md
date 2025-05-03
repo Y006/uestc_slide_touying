@@ -1,6 +1,8 @@
 # uestc_slide_touying
 ### 介绍
 这是一个电子科技大学的 Touying 模版，适用于快速构建组会汇报 slide。
+### 模版展示
+[效果预览](https://y006.github.io/uestc_slide_touying/main.pdf)
 ### 文件说明
 ```text
 uestc_slide_touying/
