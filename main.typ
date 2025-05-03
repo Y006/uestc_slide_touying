@@ -136,10 +136,10 @@
 
 == 表格
 #set table(
-  stroke: (x, y) => if y == 1 {
-    (bottom: 1.3pt + black)
-  } else if y == 0 {
+  stroke: (x, y) => if y == 0 {
     (bottom: 2pt + black)
+  } else {
+    (bottom: 1pt + black)
   },
   align: (x, y) => if x < 2 { left } else { center },
   inset: 10pt,
@@ -205,44 +205,58 @@
 
 = 数学公式
 == 基础用法
-详细内容见
-#link("https://typst-doc-cn.github.io/docs/reference/math/", text("此处"))
 
-$ A = pi r^2 $
-$ "area" = pi dot "radius"^2 $
-$ cal(A) :=
-    { x in RR | x "is natural" } $
-#let x = 5
-$ #x < 17 $
+#slide[
+  详细内容见
+  #link("https://typst-doc-cn.github.io/docs/reference/math/", text("此处"))
+  #text(size: 13pt)[
+    $ A = pi r^2 $
+  $ "area" = pi dot "radius"^2 $
+  $ cal(A) :=
+      { x in RR | x "is natural" } $
+  #let x = 5
+  $ #x < 17 $
+  $ x < y => x gt.eq.not y $
+  $ sum_(k=0)^n k
+      &= 1 + ... + n \
+      &= (n(n+1)) / 2 $
+  $ frac(a^2, 2) $
+  
+  ]
+][
+  #v(2em)
+  #text(size: 13pt)[
+  $ vec(1, 2, delim: "[") $
+  $ mat(1, 2; 3, 4) $
+  $ lim_x =
+      op("lim", limits: #true)_x $
+  $ (3x + y) / 7 &= 9 && "given" \
+      3x + y &= 63 & "multiply by 7" \
+      3x &= 63 - y && "subtract y" \
+      x &= 21 - y/3 & "divide by 3" 
+  $
+  ]
+]
 
-$ x < y => x gt.eq.not y $
-
-$ sum_(k=0)^n k
-    &= 1 + ... + n \
-    &= (n(n+1)) / 2 $
-
-$ frac(a^2, 2) $
-$ vec(1, 2, delim: "[") $
-$ mat(1, 2; 3, 4) $
-$ lim_x =
-    op("lim", limits: #true)_x $
-
-$ (3x + y) / 7 &= 9 && "given" \
-    3x + y &= 63 & "multiply by 7" \
-    3x &= 63 - y && "subtract y" \
-    x &= 21 - y/3 & "divide by 3" 
-$
 == 使用Latex语法
-像这样编写行内方程：#mi(`\frac{1}{x}`)。
-
-这个是行间公式：
+像这样编写行内方程：#mi(`\frac{1}{x}`)。下面的是行间公式：
 
 #mitex(
 ```latex
       \newcommand{\loss}{\mathcal{L}}
       \min_{G}\max_{D} \mathbb{E}_{y,g}\{\loss(Ax^{(1)},y) &+ \alpha \loss(x^{(2)},x^{(3)})\\&+ \beta \loss_\textrm{adv}(x^{(1)},x^{(2)})\},
 ```)
-
+#v(1em)
+#mitex(
+```latex
+\begin{align*}
+    E_n ||A_y n||^2 
+    &= E_n||U_y S_y V^T_y n||^2 = E_n||S_y n||^2 \\
+    &=  E_n \sum_{i=1}^N s_i^2 n_i^2 = \sum_{i=1}^N s_i^2 E_n (n_i^2) \\
+    &\approx  \sigma^2 \sum_{i = 1}^N s_i^2,
+    %\approx \sigma^2 \sum_{i = 1}^N s_i^2 = \sigma^2 d.
+\end{align*}
+```)
 == 标记公式
 
 #let pinit-highlight-equation-from(height: 2em, pos: bottom, fill: rgb(0, 180, 255), highlight-pins, point-pin, body) = {
