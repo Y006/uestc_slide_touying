@@ -7,6 +7,9 @@
 #import "@preview/pinit:0.2.2": *
 #import "@preview/mitex:0.2.5": *
 #import "@preview/algo:0.3.6": algo, i, d, comment, code
+#import "@preview/frame-it:1.1.2": *
+#import "@preview/cetz:0.3.4"
+#import "@preview/lilaq:0.2.0" as lq
 
 // 设置字体
 #set text(font: ((name: "Arial", covers: "latin-in-cjk"),"STHeiti"), lang: "zh")
@@ -28,6 +31,18 @@
       ],
   )
 )
+
+#let (example, feature, variant, syntax) = frames(
+  feature: ("Feature",),
+  // For each frame kind, you have to provide its supplement title to be displayed
+  variant: ("Variant",),
+  // You can provide a color or leave it out and it will be generated
+  example: ("Example", gray),
+  // You can add as many as you want
+  syntax: ("Syntax",),
+)
+// This is necessary. Don't forget this!
+#show: frame-style(styles.boxy)
 
 // 设置标题编号格式（1.1 → 1.）
 // #set heading(numbering: numbly("{1}.", default: "1.1"))
@@ -135,6 +150,11 @@
     [K $p_4$], [×2], [28.91], [0.8758], [30.63], [0.8564], [31.64], [0.8756],
   )
 )
+
+== 块显示
+#example[Title][Optional Tag][
+  Body, i.e. large content block for the frame.
+]
 
 = 数学公式
 == 基础用法
@@ -260,6 +280,86 @@ caption: [校徽],
 
 在 @full 上方，我们看到一个由两个其他图形组成的图形，即 @a 和 @b。
 
+== 科学绘图
+#slide[
+#h(1.35em)
+#lq.diagram(
+  lq.plot((0, 1, 2, 3, 4), (5, 4, 2, 1, 2))
+)
+#let xs = (0, 1, 2, 3, 4)
+#v(-0.8em)
+#lq.diagram(
+  title: [#text(size: 15pt)[Precious data]],
+  xlabel: $x$, 
+  ylabel: $y$,
+
+  lq.plot(xs, (5, 4, 2, 1, 2), mark: "s", label: [A]),
+  lq.plot(xs, (2, 5, 4, 2, 3), mark: "o", label: [B])
+)
+][
+#lq.diagram(
+  xaxis: (subticks: none),
+  lq.bar(
+    (1, 2, 3, 4, 5, 6),
+    (1, 2, 3, 2, 5, 3),
+  )
+)
+#v(-0.8em)
+#let a =  [Apples]
+#let b =  text(size: 12pt)[Bananas]
+#let c =  text(size: 12pt)[Kiwis]
+#let d =  text(size: 12pt)[Mangos]
+#let e =  text(size: 12pt)[Papayas]
+#lq.diagram(
+  xaxis: (
+    ticks: (a, b, c, d, e)
+      .map(rotate.with(-45deg, reflow: true))
+      .enumerate(),
+    subticks: none,
+  ),
+  lq.bar(
+    range(5),
+    (5, 3, 4, 2, 1)
+  )
+)
+][
+  #lq.diagram(
+  lq.boxplot(
+    stroke: blue.darken(50%),
+    (1, 2, 3, 4, 5, 6, 7, 8, 9, 21, 19),
+    range(1, 30),
+    (1, 28, 25, 30),
+    (1, 2, 3, 4, 5, 6, 32),
+  )
+)
+#v(0.8em)
+#lq.diagram(
+  lq.boxplot(
+    (1, 3, 10),
+    stroke: luma(30%),
+    fill: yellow,
+    median: red
+  ),
+  lq.boxplot(
+    (1.5, 3, 9),
+    x: 2,
+    whisker: blue,
+    cap: red,
+    cap-length: 0.7,
+    median: green
+  ),
+  lq.boxplot(
+    lq.linspace(5.3, 6.2) + (2, 3, 7, 9.5),
+    x: 3,
+    outliers: "x"
+   ),
+  lq.boxplot(
+    lq.linspace(5.3, 6.2) + (2, 3, 7, 9.5),
+    x: 4,
+    outliers: none
+  ),
+)
+]
 
 = 代码展示
 == 代码
@@ -322,14 +422,14 @@ int main() {
 = 参考文献与致谢
 
 == 参考文献列表
-#text(size: 15pt,)[
+#text(size: 15pt)[
   #bibliography("ref.bib", title: none, style: "ieee")
 ]
-== 致谢
-#slide[
-][
-  #v(6em)
-  #text(size: 3.2em, "Thanks!")
-][
-]
 
+== 
+#align(
+  center + horizon, 
+  text(
+  font: (name: "Zapfino", covers: "latin-in-cjk"),
+  size: 3em,)[Thanks!]
+)

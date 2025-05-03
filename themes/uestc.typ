@@ -150,7 +150,7 @@
     short-heading: true,
   ),
   footer: none,
-  footer-a: context "    汇报人：邱金羽",
+  footer-a: context "    汇报人：xxx",
   footer-b: context "    文献汇报",
   footer-c: "汇报日期：" + datetime.today().display() + "    ",
   footer-d: context utils.slide-counter.display() + " / " + utils.last-slide-number + "    ",
